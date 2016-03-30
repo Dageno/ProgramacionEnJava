@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
@@ -13,85 +14,115 @@ import java.util.regex.Pattern;
 
 class Fecha {
 
+	private static String cadena;
 	private int dia;
 	private int mes;
 	private int anno;
 	GregorianCalendar cal;
 	private static final Pattern REGEX = Pattern.compile("(0?[1-9]|[12][0-9]|3[01])[- /](0?[1-9]|1[012])[-/]\\d{4}");
+	
 
-	Fecha(String cadena) throws FormatoFechaNoValido {
-
-		Matcher regex = REGEX.matcher(cadena);
-		esValido(regex, cadena);
+	Fecha(String cadena) throws FormatoFechaNoValido, FechaNoValidaException {
+		try{
+			this.cadena = cadena;
+			esValido();
+		}catch(FormatoFechaNoValido e){
+			System.out.println(e.getMessage());
+		}
+		
 
 	}
 
-	private void esValido(Matcher regex, String cadena) throws FormatoFechaNoValido {
+	private void esValido() throws FormatoFechaNoValido, FechaNoValidaException {
+		Matcher regex = REGEX.matcher(cadena);
 		if (regex.matches()) {
-			setDia(cadena);
-			setMes(cadena);
-			setAnno(cadena);
-			cal = new GregorianCalendar(anno, mes, dia);
+			setDia();
+			setMes();
+			setAnno();
+			setCalendar();
+			
 
 		} else {
-			throw new FormatoFechaNoValido("El formato de la fecha no es válido");
+			throw new FormatoFechaNoValido("La fecha no es válida");
 		}
 
 	}
 
-	Fecha(int dia, int mes, int anno) {
-		setDia(dia);
-		setMes(mes);
-		setAnno(anno);
-		cal = new GregorianCalendar(this.anno, this.mes, this.dia);
+	private void setCalendar() throws FechaNoValidaException {
+		try {
+			cal= new GregorianCalendar(anno, mes, dia);
+			cal.setLenient(false);
+			cal.getTime();
+		} catch (Exception e) {
+			throw new FechaNoValidaException("Fecha no válida.");
+		}
+		
 	}
 
-	public Fecha(java.util.Date time) {
-		dia = time.getDate();
-		mes = time.getMonth();
-		anno = time.getYear() + 1900;
+	Fecha(int dia, int mes, int anno) throws FechaNoValidaException, FormatoFechaNoValido {
+		
+		
+		try{
+			cadena = ""+dia+"/"+mes+"/"+anno;
+			esValido();
+			
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		
+	}
+
+	public Fecha(java.util.Date tiempo) {
+		dia = tiempo.getDate();
+		mes = tiempo.getMonth();
+		anno = tiempo.getYear() + 1900;
 
 		cal = new GregorianCalendar(anno, mes, dia);
 
 	}
 
-	private void setDia(int dia2) {
-
-		dia = dia2;
-
-	}
-
-	private void setMes(int mes2) {
-
-		mes = mes2 - 1;
-
-	}
-
-	private void setAnno(int anno2) {
-
-		anno = anno2;
-
-	}
-
-	private void setDia(String cadena) {
+	
+	private void setDia() {
 		String num = cadena.substring(0, 2);
 		dia = Integer.parseInt(num);
 
 	}
 
-	private void setMes(String cadena) {
+	private void setMes() {
 		String num = cadena.substring(3, 5);
 		mes = Integer.parseInt(num) - 1;
 
 	}
 
-	private void setAnno(String cadena) {
+	private void setAnno() {
 		String num = cadena.substring(6, 10);
 		anno = Integer.parseInt(num);
 
 	}
 
+	boolean esMayordeEdad(){
+
+		LocalDate fecha1=LocalDate.of(cal.get(GregorianCalendar.YEAR),
+				cal.get(GregorianCalendar.MONTH)+1,
+				cal.get(GregorianCalendar.DAY_OF_MONTH));
+		
+		LocalDate fecha2 = LocalDate.now();
+		
+		if(ChronoUnit.YEARS.between(fecha1,fecha2)<18)
+			return false;
+		return true;
+		
 	
+	}
+	boolean esFutura(Fecha fecha){
+		GregorianCalendar aux = new GregorianCalendar();
+		long fechainicial =  aux.getTimeInMillis();
+		long fechaFinal =  fecha.cal.getTimeInMillis();
+		if(fechainicial<fechaFinal)
+			return true;
+		return false;
+	}
+
 	Fecha sumarFechas(Fecha fecha) {
 		GregorianCalendar sumada = new GregorianCalendar(fecha.anno, fecha.mes, fecha.dia);
 		sumada.add(GregorianCalendar.DATE, dia);
@@ -101,6 +132,7 @@ class Fecha {
 		return new Fecha(sumada.getTime());
 	}
 
+	
 	
 	long tiempoTranscurridoDi(Fecha fecha) {
 
