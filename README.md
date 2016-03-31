@@ -1,3 +1,3 @@
 # ProgramacionEnJava
 
-hola mundos
+Estamos en el repositorio de programación en Java.
