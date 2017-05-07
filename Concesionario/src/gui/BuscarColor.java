@@ -13,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import concesionarioFicheros.Color;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class BuscarColor extends VentanaPadre {
 
@@ -98,11 +99,28 @@ public class BuscarColor extends VentanaPadre {
 		contentPanel.add(btnBuscar);
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				colores.clear();
+				cogerColor();
+				try{
+					actualizarCamposSinColor(colores.get(0));
+					actualizarBoton(atras, adelante);
+				}catch(IndexOutOfBoundsException e){
+					JOptionPane.showMessageDialog(null, "No se han encontrado coches con este color", "Coches no encontrados",
+							JOptionPane.ERROR_MESSAGE);
+				}
+						
+				
+			}
 
-				iteradorColores = buscarPorColor((Color) comboBox.getSelectedItem()).listIterator();
-				comboBox.setEnabled(false);
-				actualizarCamposSinColor(colores.get(0));
-				actualizarBoton(atras, adelante);
+			private void cogerColor() {
+				if (comboBox.getSelectedItem() == Color.AZUL)
+					iteradorColores = buscarPorColor(Color.AZUL).listIterator();
+				else if (comboBox.getSelectedItem() == Color.PLATA)
+					iteradorColores = buscarPorColor(Color.PLATA).listIterator();
+				else
+					iteradorColores = buscarPorColor(Color.ROJO).listIterator();
+				
+				
 			}
 
 		});
@@ -142,6 +160,8 @@ public class BuscarColor extends VentanaPadre {
 			}
 		});
 		buttonPane.add(cancelButton);
+		
+		
 		
 	}
 

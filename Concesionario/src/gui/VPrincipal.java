@@ -14,8 +14,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import concesionarioFicheros.Gestion;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.awt.event.InputEvent;
 import javax.swing.JSeparator;
 import java.awt.Component;
@@ -51,12 +54,47 @@ public class VPrincipal {
 	 */
 	public VPrincipal() {
 		initialize();
+//		eventoCerrado();
 	}
+
+//	private void eventoCerrado() {
+//		addWindowListener(new WindowAdapter() {
+//			public void windowClosing(WindowEvent e) {
+//				if (Gestion.getModificado()) {
+//					if (JOptionPane.showConfirmDialog(null, "Has hecho cambios... ¿quieres guardar antes de salir?",
+//							"Festival modificado", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+//						if (Gestion.getFile() == null)
+//							try {
+//								Gestion.guardarComo(Gestion.ficheroNuevo(), VentanaPadre.concesionario);
+//							} catch (IOException e1) {
+//								// TODO Auto-generated catch block
+//								e1.printStackTrace();
+//							}
+//						else
+//							try {
+//								Gestion.guardar(VentanaPadre.concesionario);
+//							} catch (IOException e1) {
+//								// TODO Auto-generated catch block
+//								e1.printStackTrace();
+//							}
+//					}
+//				}
+//			}
+//		});
+//		
+//	
+//		
+//	}
+
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		
+		
+		
 		frame = new JFrame();
 		frame.getContentPane().setSize(new Dimension(9, 9));
 		if(Gestion.getFile() != null)
@@ -64,7 +102,8 @@ public class VPrincipal {
 		else
 			frame.setTitle("Sin título");
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -279,6 +318,8 @@ public class VPrincipal {
 			return null;
 		}	
 	}
+	
+	
 }
 
 
