@@ -14,14 +14,14 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class MostrarConcesionario extends VentanaPadre {
+public class MostrarConcesionario extends BuscarCoche {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	Coche coche = concesionario.get(0);
+
 	/**
 	 * Launch the application.
 	 */
@@ -58,7 +58,8 @@ public class MostrarConcesionario extends VentanaPadre {
 		
 		
 		if(concesionario.isEmpty()){
-			System.out.println(concesionario);
+			
+			
 			JLabel lblElConcesionarioEst = new JLabel("El concesionario est\u00E1 vac\u00EDo");
 			lblElConcesionarioEst.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
 			lblElConcesionarioEst.setBounds(134, 89, 207, 14);
@@ -75,6 +76,7 @@ public class MostrarConcesionario extends VentanaPadre {
 		
 		
 		}else{
+			Coche coche = concesionario.get(0);
 			iteradorColores = VentanaPadre.concesionario.almacen.listIterator();
 			
 			actualizarBoton(atras, adelante);

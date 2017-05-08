@@ -3,7 +3,6 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -83,16 +82,17 @@ public class AltaCoche extends VentanaPadre {
 		contentPanel.add(marca);
 
 		{
-			JPanel buttonPane = new JPanel();
+			
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("Aceptar");
+				
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
 							concesionario.annadir(Matricula.getText(), getColor(), (Modelo) modelo.getSelectedItem());
 							Gestion.setModificado(true);
+							limpiarCamposAlta();
 							JOptionPane.showMessageDialog(contentPanel, "Coche añadido con éxito." );
 							
 						} catch (Exception e) {
@@ -107,7 +107,7 @@ public class AltaCoche extends VentanaPadre {
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancelar");
+				
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						limpiarCampos();
@@ -121,10 +121,7 @@ public class AltaCoche extends VentanaPadre {
 		
 	}
 
-	protected void limpiarCampos() {
-		Matricula.setText("");
-		buttonGroup.clearSelection();		
-	}
+	
 
 	
 }

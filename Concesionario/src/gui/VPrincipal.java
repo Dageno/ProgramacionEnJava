@@ -128,6 +128,7 @@ public class VPrincipal {
 		frame.setJMenuBar(menuBar);
 
 		JMenu mnArchivo = new JMenu("Archivo");
+		mnArchivo.setMnemonic('A');
 		menuBar.add(mnArchivo);
 
 		AltaCoche alta = new AltaCoche();
@@ -222,6 +223,7 @@ public class VPrincipal {
 		mnArchivo.add(mntmSalir);
 
 		JMenu mnCoche = new JMenu("Coche\r\n");
+		mnCoche.setMnemonic('C');
 		menuBar.add(mnCoche);
 
 		JMenuItem mntmAltaCoche = new JMenuItem("Alta Coche");
@@ -265,11 +267,11 @@ public class VPrincipal {
 		JMenuItem mntmMostrarConcesionario = new JMenuItem("Mostrar Concesionario");
 		mntmMostrarConcesionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (concesionarioNoVacio()) {
+				
 					MostrarConcesionario mostrar = new MostrarConcesionario();
 					mostrar.setModal(true);
 					mostrar.setVisible(true);
-				}
+				
 			}
 		});
 
@@ -290,9 +292,11 @@ public class VPrincipal {
 		mnCoche.add(mntmMostrarConcesionario);
 
 		JMenu mnAyuda = new JMenu("Ayuda");
+		mnAyuda.setMnemonic('Y');
 		menuBar.add(mnAyuda);
 
 		JMenuItem mntmVerAyuda = new JMenuItem("Ver Ayuda");
+		mntmVerAyuda.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		mntmVerAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Ayuda ayuda = Ayuda.getSingleton();
@@ -302,6 +306,7 @@ public class VPrincipal {
 		mnAyuda.add(mntmVerAyuda);
 
 		JMenuItem mntmAcercaDe = new JMenuItem("Acerca del Concesionario");
+		mntmAcercaDe.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		mntmAcercaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AcercaDe acercaDe = new AcercaDe();

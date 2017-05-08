@@ -112,19 +112,22 @@ public class BajaCoche extends VentanaPadre {
 				JButton okButton = new JButton("Eliminar");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if (coche != null) {
+//						if (coche != null) {
 							try {
+								if(marca.getSelectedItem() == null)
+									buscarPorMatricula();
 								concesionario.eliminar(coche.getMatricula());
 								Gestion.setModificado(true);
 								JOptionPane.showMessageDialog(contentPanel, "Coche eliminado con éxito.");
+								limpiarCampos();
 							} catch (Exception e1) {
 								JOptionPane.showMessageDialog(contentPanel, "Error al eliminar el coche.", "Error",
 										JOptionPane.ERROR_MESSAGE);
 							}
-						} else {
-							JOptionPane.showMessageDialog(contentPanel, "Debe buscar un coche primero para eliminar.",
-									"Error", JOptionPane.ERROR_MESSAGE);
-						}
+//						} else {
+//							JOptionPane.showMessageDialog(contentPanel, "Debe buscar un coche primero para eliminar.",
+//									"Error", JOptionPane.ERROR_MESSAGE);
+//						}
 					}
 				});
 				okButton.setActionCommand("Eliminar");
