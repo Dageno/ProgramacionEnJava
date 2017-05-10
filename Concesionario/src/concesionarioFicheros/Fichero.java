@@ -19,7 +19,7 @@ public class Fichero {
 		return archivo;
 	}
 
-	static void escribir(File archivo, Concesionario concesionario) throws FileNotFoundException, IOException {
+	static void escribir(File archivo, Drop concesionario) throws FileNotFoundException, IOException {
 		archivo = comprobarExtend(archivo);
 		if (archivo.exists())
 			if (!Gestion.deseaGuardar("El archivo ya existe, desea sobreescribirlo ? (y/n)"))
@@ -30,12 +30,12 @@ public class Fichero {
 		}
 	}
 
-	public static Concesionario leer(File archivo, Concesionario concesionario) throws IOException, ClassNotFoundException{
+	public static Drop leer(File archivo, Drop concesionario) throws IOException, ClassNotFoundException{
 		archivo = comprobarExtend(archivo);
 		if(Gestion.modificado)
-			Gestion.nuevo(concesionario);
+			Gestion.nuevo(archivo, concesionario);
 		try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(archivo)))) {
-			return (Concesionario) ois.readObject();
+			return (Drop) ois.readObject();
 
 		}catch(FileNotFoundException e){
 			System.err.println("El fichero introducido no existe.");
@@ -45,7 +45,7 @@ public class Fichero {
 
 	}
 
-	public static void guardar(File archivo, Concesionario concesionario) throws FileNotFoundException, IOException {
+	public static void guardar(File archivo, Drop concesionario) throws FileNotFoundException, IOException {
 
 		try (ObjectOutputStream ous = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(archivo)))) {
 			ous.writeObject(concesionario);

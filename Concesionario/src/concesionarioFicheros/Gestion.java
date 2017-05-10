@@ -18,7 +18,7 @@ import utiles.Teclado;
 public class Gestion {
 	public static File archivo;
 	static boolean modificado;
-	public static Concesionario concesionario = new Concesionario();
+	public static Drop concesionario = new Drop();
 	
 	
 	public static void setModificado(boolean modify) {
@@ -26,17 +26,17 @@ public class Gestion {
 
 	}
 	
-	public static void nuevo(Concesionario concesionario) throws FileNotFoundException, IOException {
+	public static void nuevo(File archivo, Drop concesionario) throws FileNotFoundException, IOException {
 		if (Gestion.modificado) {
 			if (deseaGuardar("Se han hecho modificaciones, Desea guardar los cambios ? (y/n)")) {
-				Fichero.escribir(ficheroNuevo(), concesionario);
+				Fichero.escribir(archivo, concesionario);
 			}
 		}
 		concesionario.limpiarConcesionario();
 		archivo = null;
 		setModificado(false);
 	}
-	static boolean deseaGuardar(String string) {
+	public static boolean deseaGuardar(String string) {
 		int confirmado = JOptionPane.showConfirmDialog(
 				   null,
 				   string);
@@ -45,14 +45,14 @@ public class Gestion {
 		return false;
 	}
 
-	public static Concesionario abrir(File archivo, Concesionario concesionario) throws FileNotFoundException, ClassNotFoundException, IOException{
+	public static Drop abrir(File archivo, Drop concesionario) throws FileNotFoundException, ClassNotFoundException, IOException{
 		return Fichero.leer(archivo, concesionario);
 	}
 
-	public static void guardar(Concesionario concesionario) throws FileNotFoundException, IOException {
+	public static void guardar(Drop concesionario) throws FileNotFoundException, IOException {
 		if(getFile()==null){
 			
-			guardarComo(ficheroNuevo(), concesionario);
+			guardarComo(VPrincipal.fileChooser.getSelectedFile(), concesionario);
 		}
 		else
 			Fichero.guardar(getFile(), concesionario);
@@ -71,9 +71,14 @@ public class Gestion {
 		return archivo;
 	}
 
-	public static void guardarComo(File archivo, Concesionario concesionario) throws FileNotFoundException, IOException {
+	public static void guardarComo(File archivo, Drop concesionario) throws FileNotFoundException, IOException {
 		Fichero.escribir(archivo, concesionario);
 		
+	}
+
+	public static boolean getModificado() {
+		
+		return modificado;
 	}
 	
 

@@ -31,7 +31,7 @@ import java.awt.Font;
 public class VPrincipal {
 
 	JFrame frame;
-	JFileChooser fileChooser = new JFileChooser();
+	public static JFileChooser fileChooser = new JFileChooser();
 	protected static FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.obj", "obj");
 
 	/**
@@ -128,7 +128,7 @@ public class VPrincipal {
 		frame.setJMenuBar(menuBar);
 
 		JMenu mnArchivo = new JMenu("Archivo");
-		mnArchivo.setMnemonic('A');
+		mnArchivo.setMnemonic('a');
 		menuBar.add(mnArchivo);
 
 		AltaCoche alta = new AltaCoche();
@@ -139,7 +139,7 @@ public class VPrincipal {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					Gestion.nuevo(VentanaPadre.concesionario);
+					Gestion.nuevo(fileChooser.getSelectedFile(), VentanaPadre.concesionario);
 				} catch (FileNotFoundException e) {
 					JOptionPane.showMessageDialog(frame, "No se encuentra el archivo.", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -223,7 +223,7 @@ public class VPrincipal {
 		mnArchivo.add(mntmSalir);
 
 		JMenu mnCoche = new JMenu("Coche\r\n");
-		mnCoche.setMnemonic('C');
+		mnCoche.setMnemonic('c');
 		menuBar.add(mnCoche);
 
 		JMenuItem mntmAltaCoche = new JMenuItem("Alta Coche");
@@ -292,7 +292,7 @@ public class VPrincipal {
 		mnCoche.add(mntmMostrarConcesionario);
 
 		JMenu mnAyuda = new JMenu("Ayuda");
-		mnAyuda.setMnemonic('Y');
+		mnAyuda.setMnemonic('y');
 		menuBar.add(mnAyuda);
 
 		JMenuItem mntmVerAyuda = new JMenuItem("Ver Ayuda");

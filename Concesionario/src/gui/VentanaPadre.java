@@ -31,7 +31,7 @@ public class VentanaPadre extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel panelPrincipal = new JPanel();
-	static Concesionario concesionario = Gestion.concesionario;
+	static Drop concesionario = Gestion.concesionario;
 	protected ArrayList<Coche> colores = new ArrayList<Coche>();
 	ListIterator<Coche> iteradorColores;
 	
@@ -52,7 +52,7 @@ public class VentanaPadre extends JDialog {
 	protected JPanel buttonPane = new JPanel();
 	protected JButton btnBuscar = new JButton("Buscar");
 	protected JButton okButton = new JButton("Aceptar");
-	protected JButton cancelButton = new JButton("Cancelar");
+	protected JButton cancelButton = new JButton("Salir");
 	protected JButton adelante = new JButton(">");
 	protected JButton atras = new JButton("<");
 	
@@ -295,5 +295,18 @@ public class VentanaPadre extends JDialog {
 		return colores;
 		
 	}
+	
+	protected void limpiarCampos() {
+		Matricula.setText("");
+		buttonGroup.clearSelection();
+		marca.setSelectedItem(null);	
+		modelo.setSelectedItem(null);
+	}
+	protected void limpiarCamposAlta() {
+		Matricula.setText("");
+		buttonGroup.clearSelection();
+
+	}
+	
 
 }
