@@ -52,7 +52,7 @@ public class Gestion {
 	public static void guardar(Drop concesionario) throws FileNotFoundException, IOException {
 		if(getFile()==null){
 			
-			guardarComo(VPrincipal.fileChooser.getSelectedFile(), concesionario);
+			guardarComo(VPrincipal.leerArchivo(), concesionario);
 		}
 		else
 			Fichero.guardar(getFile(), concesionario);

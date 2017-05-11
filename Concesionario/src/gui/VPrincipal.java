@@ -31,8 +31,15 @@ import java.awt.Font;
 public class VPrincipal {
 
 	JFrame frame;
-	public static JFileChooser fileChooser = new JFileChooser();
-	protected static FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.obj", "obj");
+	public static JFileChooser fileChooser;
+	/**
+	 * Bloque estático para iniciar el filechooser
+	 */
+	static {
+		fileChooser = new JFileChooser();
+		FileNameExtensionFilter extension = new FileNameExtensionFilter("Concesionario de coches", "obj");
+		fileChooser.setFileFilter(extension);
+	}
 
 	/**
 	 * Launch the application.
@@ -139,7 +146,7 @@ public class VPrincipal {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					Gestion.nuevo(fileChooser.getSelectedFile(), VentanaPadre.concesionario);
+					Gestion.nuevo(leerArchivo(), VentanaPadre.concesionario);
 				} catch (FileNotFoundException e) {
 					JOptionPane.showMessageDialog(frame, "No se encuentra el archivo.", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -333,10 +340,10 @@ public class VPrincipal {
 		return false;
 	}
 
-	private File leerArchivo() {
+	public static File leerArchivo() {
 
-		fileChooser.setFileFilter(filtro);
-		int returnVal = fileChooser.showOpenDialog(frame);
+		
+		int returnVal = fileChooser.showOpenDialog(null);
 		if (returnVal != JFileChooser.CANCEL_OPTION) {
 			return fileChooser.getSelectedFile();
 
